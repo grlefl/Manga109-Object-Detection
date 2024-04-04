@@ -23,7 +23,7 @@ def load_all_images(parser, classes):
           author_labels.append(author)
     return images, author_labels
 
-# from the github 
+# from the github
 def check_annotation_validity(annotation, index, classes):
     """
     This function check the presence of at least one annotated box in the image.

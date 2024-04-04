@@ -10,8 +10,8 @@ def draw_rectangle(image, x0, y0, x1, y1, annotation_type):
     draw.rectangle((x0, y0, x1, y1), outline=color, width=10)
 
 
-def draw_annotations(img_path, page_annotation):
-    image = Image.open(img_path)
+def draw_annotations(image, page_annotation):
+    # image = Image.open(img_path)
 
     for annotation_type in ["body", "face", "frame", "text"]:
         rois = page_annotation[annotation_type]
