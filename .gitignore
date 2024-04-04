@@ -1,2 +1,3 @@
-/Dataset/VOCtest_06-Nov-2007.tar
-/Dataset/VOCtrainval_06-Nov-2007.tar
+/.tarfiles/VOCtest_06-Nov-2007.tar
+/.tarfiles/VOCtrainval_06-Nov-2007.tar
+/VOCdevkit/
