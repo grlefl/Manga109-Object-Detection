@@ -17,7 +17,7 @@ class Parser:
         """
         images = []
         book_labels = []
-        for book_title in self.parser.books:
+        for book_title in self.parser.books[:5]:
             book_annotation = self.parser.get_annotation(book=book_title)
             pages = book_annotation["page"]
             for page_annotation in pages:
