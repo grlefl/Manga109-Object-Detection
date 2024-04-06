@@ -16,18 +16,15 @@ def train_model(model, device, optimizer, train_loader, val_loader, epochs):
         running_loss = 0.0
         for i, data in enumerate(train_loader):
 
-            # THIS IS WEIRD
-            images, targets = data[0].to(device), data[1]
-
+            images, targets = data[0].to(device), data[1]           # THIS IS WEIRD
             optimizer.zero_grad()                                   # zero the parameter gradients
             outputs = model(images)                                 # forward pass to get model predictions
             loss_dict = criterion(outputs, targets)                 # calculate loss
-            loss = sum(loss for loss in loss_dict.values())
+            loss = sum(loss for loss in loss_dict.values())         # IDK WHAT THIS IS
             loss.backward()                                         # backward pass to compute gradients
             optimizer.step()                                        # update model parameters
+            running_loss += loss.item()                             # add current bach loss to total epoch running loss
 
-            # add current bach loss to total epoch running loss
-            running_loss += loss.item()
         epoch_loss = running_loss / (i + 1)
         print("Epoch: ", epoch, " train loss: ", '%.3f' % epoch_loss)
 
@@ -36,15 +33,12 @@ def train_model(model, device, optimizer, train_loader, val_loader, epochs):
             running_loss = 0.0
             for i, data in enumerate(val_loader):
 
-                # THIS IS WEIRD
-                images, targets = data[0].to(device), data[1]
-
+                images, targets = data[0].to(device), data[1]       # THIS IS WEIRD
                 outputs = model(images)                             # forward pass to get model predictions
                 loss_dict = criterion(outputs, targets)             # calculate loss
-                loss = sum(loss for loss in loss_dict.values())
+                loss = sum(loss for loss in loss_dict.values())     # IDK WHAT THIS IS
+                running_loss += loss.item()                         # add current bach loss to total epoch running loss
 
-                # add current bach loss to total epoch running loss
-                running_loss += loss.item()
             epoch_loss = running_loss / (i + 1)
 
             # add each epoch loss to validation loss for early stopping
@@ -59,7 +53,6 @@ def train_model(model, device, optimizer, train_loader, val_loader, epochs):
                 no_improvement_count = 0
             else:
                 no_improvement_count += 1
-
             # check for early stopping based on patience
             if no_improvement_count >= patience:
                 print("Stopping Early")
