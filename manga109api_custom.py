@@ -17,14 +17,14 @@ class Parser:
         """
         images = []
         book_labels = []
-        for book_title in self.parser.books[:5]:
+        for book_title in self.parser.books:
             book_annotation = self.parser.get_annotation(book=book_title)
             pages = book_annotation["page"]
             for page_annotation in pages:
                 if validate_annotations(page_annotation):
                     page_index = page_annotation["@index"]
                     img_path = self.parser.img_path(book=book_title, index=page_index)
-                    images.append({"img_path": img_path, "page_annotation": page_annotation})
+                    images.append({"img_path": img_path, "page_annotation": page_annotation, "book_title": book_title})
                     book_labels.append(book_title)
         return images, book_labels
 
@@ -36,5 +36,8 @@ def validate_annotations(page_annotation):
     Returns:
     - bool: True if the page annotation contains any of the specified annotation keys, False otherwise.
     """
-    annotation_keys = {"body", "face", "frame", "text"}
-    return annotation_keys.intersection(page_annotation.keys())
+    annotation_keys = {'body', 'face', 'frame', 'text'}
+    for key in annotation_keys:
+        if page_annotation.get(key, []):  # check if the key exists and if its value is not an empty list
+            return True
+    return False
