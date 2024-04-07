@@ -17,7 +17,7 @@ class CustomDataset(Dataset):
 
         image = Image.open(img_path).convert("RGB")
 
-        boxes = []
+        bboxes = []
         labels = []
         areas = []
         iscrowd = []
@@ -28,20 +28,20 @@ class CustomDataset(Dataset):
             xmax = label['@xmax']
             ymax = label['@ymax']
 
-            boxes.append([xmin, ymin, xmax, ymax])
+            bboxes.append([xmin, ymin, xmax, ymax])
             labels.append(label)  # Assuming the category is the label itself
             areas.append((xmax - xmin) * (ymax - ymin))
             iscrowd.append(0)  # Assuming all annotations are single instances, not crowds
 
         # Convert lists to tensors
-        boxes = torch.as_tensor(boxes, dtype=torch.float32)
+        bboxes = torch.as_tensor(boxes, dtype=torch.float32)
         labels = torch.tensor(labels, dtype=torch.int64)
         image_id = torch.tensor([idx], dtype=torch.int64)
         areas = torch.as_tensor(areas, dtype=torch.float32)
         iscrowd = torch.tensor(iscrowd, dtype=torch.int64)
 
         my_annotation = {
-            "boxes": boxes,
+            "boxes": bboxes,
             "labels": labels,
             "image_id": image_id,
             "area": areas,
@@ -49,6 +49,6 @@ class CustomDataset(Dataset):
         }
 
         if self.transform:
-            image, my_annotation = self.transform(image)
+            image, my_annotation = self.transform(image=image, bboxes=bboxes)
 
         return image, my_annotation
