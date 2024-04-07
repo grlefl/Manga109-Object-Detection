@@ -24,7 +24,7 @@ class Parser:
                 if validate_annotations(page_annotation):
                     page_index = page_annotation["@index"]
                     img_path = self.parser.img_path(book=book_title, index=page_index)
-                    images.append({"img_path": img_path, "page_annotation": page_annotation, "book_title": book_title})
+                    images.append({"img_path": img_path, "page_annotation": page_annotation})
                     book_labels.append(book_title)
         return images, book_labels
 
