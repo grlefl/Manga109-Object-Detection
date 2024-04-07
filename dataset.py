@@ -1,23 +1,6 @@
 import torch
 from torch.utils.data import Dataset
-import torchvision.transforms as T
 
-# define the training transforms with data augmentation
-def get_train_transform_aug():
-   return T.Compose([
-        T.PILToTensor(),
-        T.ConvertImageDtype(torch.float),
-        T.RandomHorizontalFlip(p=0.5),
-        T.RandomPhotometricDistort(p=0.5),
-        T.RandomZoomOut(p=0.5)
-    ])
-
-# define the validation tranforms
-def get_valid_transform():
-    return T.Compose([
-        T.PILToTensor(),
-        T.ConvertImageDtype(torch.float)
-    ])
 
 """ Custom class used to create the training and validation sets. """
 class CustomDataset(Dataset):
