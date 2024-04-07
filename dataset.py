@@ -19,6 +19,9 @@ class CustomDataset(Dataset):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)          # convert BGR image to RGB
 
         if self.transform:
-            image, bboxes, labels = self.transform(image=image, bboxes=bboxes, labels=labels)
+            transformed = self.transform(image=image, bboxes=bboxes, labels=labels)
+            image = transformed['image']
+            bboxes = transformed['bboxes']
+            labels = transformed['labels']
 
         return image, bboxes, labels
