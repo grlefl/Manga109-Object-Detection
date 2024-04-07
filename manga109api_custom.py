@@ -21,36 +21,41 @@ class Parser:
         for book in self.parser.books:
             book_annotation = self.parser.get_annotation(book=book)
             page_annotations = book_annotation["page"]
-            for annotation in page_annotations:
-                if self.validate_annotation(annotation):
+            for page in page_annotations:
+                if self.validate_annotation(page):
 
-                    # img_path.append(annotation['path'])
-                    width.append(annotation['@width'])
-                    height.append(annotation['@height'])
-                    book_id.append(book)
+                    page_bboxes = []
+                    page_labels = []
 
-                    bboxes = []
-
-                    for category in annotation.keys():
-                        if category in self.encoded_labels.keys():
-                            for bbox in category:
+                    for category in page.keys():
+                        if category == '@index':
+                            img_path.append(self.parser.img_path(book=book, index=page['@index']))
+                        elif category == '@height':
+                            height.append(page['@height'])
+                        elif category == '@width':
+                            width.append(page['@width'])
+                        else:
+                            for bbox in page[category]:
                                 coco = [
                                     bbox['@xmin'],
                                     bbox['@ymin'],
                                     bbox['@xmax'] - bbox['@xmin'],  # width
                                     bbox['@ymax'] - bbox['@ymin']  # height
                                 ]
-                                bboxes.append(coco)  # [xmin, ymin, width, height]
+                                page_bboxes.append(coco)  # [xmin, ymin, width, height]
+                                page_labels.append(self.encoded_labels[category])
 
-                                labels.append(self.encoded_labels[category])
+                    labels.append(page_labels)
+                    bboxes.append(page_bboxes)
+                    book_id.append(book)
 
         img_dict = {
             "img_path": img_path,
             "width": width,
             "height": height,
+            "book_id": book_id,
             "bboxes": bboxes,
-            "labels": labels,
-            "book_id": book_id
+            "labels": labels
         }
 
         return img_dict
