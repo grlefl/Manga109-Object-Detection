@@ -23,7 +23,7 @@ class CustomDataset(Dataset):
         if self.transform:
             transformed = self.transform(image=image)  # , bboxes=bboxes, labels=labels
             image = transformed['image']
-            # bboxes = transformed['bboxes']
-            # labels = transformed['labels']
+            bboxes = transformed['bboxes']
+            labels = transformed['labels']
 
-        return image    #, bboxes, labels
+        return image, bboxes, labels
