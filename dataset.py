@@ -40,7 +40,7 @@ class CustomDataset(Dataset):
         if self.transform:
             transformed = self.transform(image=image, bboxes=target['bboxes'], labels=labels)
             image = transformed['image']
-            target['bboxes'] = transformed['bboxes']
+            target['bboxes'] = torch.Tensor(transformed['bboxes'])  # must make tensor again for some reason, idk 
 
         return image, target
 
