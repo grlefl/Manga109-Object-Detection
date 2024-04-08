@@ -1,27 +1,25 @@
 # start the training epochs
-def train()
-    for epoch in range(NUM_EPOCHS):
-        print(f"\nEPOCH {epoch + 1} of {NUM_EPOCHS}")
-        # reset the training and validation loss histories for the current epoch
-        train_loss_hist.reset()
-        val_loss_hist.reset()
-        # start timer and carry out training and validation
-        start = time.time()
+def train(num_epochs,train_loss_hist,val_loss_hist,time,train_loader,val_loader,model,optimizer):
+    for epoch in range(num_epochs):
+        print(f"\nEPOCH {epoch + 1} of {num_epochs}")
+        train_loss_hist.reset()     # reset epoch training history
+        val_loss_hist.reset()       # reset epoch validation history
+
+        start = time.time()  # start timer and carry out training and validation
+
         train_loss = train(train_loader, model)
-        val_loss = validate(valid_loader, model)
-        print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}")
-        print(f"Epoch #{epoch + 1} validation loss: {val_loss_hist.value:.3f}")
+        val_loss = validate(val_loader, model)
+        print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}, validation loss: {val_loss_hist.value:.3f}")
+
         end = time.time()
         print(f"Took {((end - start) / 60):.3f} minutes for epoch {epoch}")
-        # save the best model till now if we have the least loss in the...
-        # ... current epoch
-        save_best_model(
-            val_loss_hist.value, epoch, model, optimizer
-        )
-        # save the current epoch model
-        save_model(epoch, model, optimizer)
-        # save loss plot
-        save_loss_plot(OUT_DIR, train_loss, val_loss)
+
+        # save the best model till now if we have the least loss in the current epoch
+        # save_best_model(
+        #     val_loss_hist.value, epoch, model, optimizer
+        # )
+        # save_model(epoch, model, optimizer)             # save the current epoch model
+        # save_loss_plot(OUT_DIR, train_loss, val_loss)   # save loss plot
 
         # sleep for 5 seconds after each epoch
         time.sleep(5)
