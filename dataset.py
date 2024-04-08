@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import torch
 from torch.utils.data import Dataset
 
 
@@ -21,9 +22,12 @@ class CustomDataset(Dataset):
         # image = image.astype(np.float32) / 255.             # normalize image for pixel range [0, 1]
 
         if self.transform:
-            transformed = self.transform(image=image)  # , bboxes=bboxes, labels=labels
-            image = transformed['image']
+            transformed = self.transform(image=image, bboxes=bboxes, labels=labels)
+            image = transformed['image']    # image transform includes ToTensor
             bboxes = transformed['bboxes']
             labels = transformed['labels']
+
+        bboxes = torch.tensor(bboxes, dtype=torch.float32)
+        labels = torch.tensor(labels, dtype=torch.int64)
 
         return image, bboxes, labels
