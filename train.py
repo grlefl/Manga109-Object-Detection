@@ -1,5 +1,8 @@
-# start the training epochs
-def train(num_epochs,train_loss_hist,val_loss_hist,time,train_loader,val_loader,model,optimizer):
+import torch
+from tqdm import tqdm
+
+
+def train_model(num_epochs, train_loss_hist, val_loss_hist, time, train_loader, val_loader, model, optimizer, device):
     for epoch in range(num_epochs):
         print(f"\nEPOCH {epoch + 1} of {num_epochs}")
         train_loss_hist.reset()     # reset epoch training history
@@ -7,7 +10,7 @@ def train(num_epochs,train_loss_hist,val_loss_hist,time,train_loader,val_loader,
 
         start = time.time()  # start timer and carry out training and validation
 
-        train_loss = train(train_loader, model)
+        train_loss = train(train_loader, model, optimizer, device, train_loss_hist)
         val_loss = validate(val_loader, model)
         print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}, validation loss: {val_loss_hist.value:.3f}")
 
@@ -26,28 +29,31 @@ def train(num_epochs,train_loss_hist,val_loss_hist,time,train_loader,val_loader,
 
 
 # function for running training iterations
-def train(train_data_loader, model):
+def train(train_loader, model, optimizer, device, train_loss_hist):
     print('Training')
-    global train_itr
-    global train_loss_list
+    # global train_itr
+    train_loss_list = []
 
     # initialize tqdm progress bar
-    prog_bar = tqdm(train_data_loader, total=len(train_data_loader))
+    prog_bar = tqdm(train_loader, total=len(train_loader))
 
-    for i, data in enumerate(prog_bar):
+    for i, data in enumerate(train_loader):
         optimizer.zero_grad()
         images, targets = data
 
-        images = list(image.to(DEVICE) for image in images)
-        targets = [{k: v.to(DEVICE) for k, v in t.items()} for t in targets]
+        images = list(image.to(device) for image in images)
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
+
         loss_dict = model(images, targets)
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
+
         train_loss_list.append(loss_value)
         train_loss_hist.send(loss_value)
+
         losses.backward()
         optimizer.step()
-        train_itr += 1
+        # train_itr += 1
 
         # update the loss value beside the progress bar for each iteration
         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
@@ -55,27 +61,29 @@ def train(train_data_loader, model):
 
 
 # function for running validation iterations
-def validate(valid_data_loader, model):
+def validate(val_loader, model, device, val_loss_hist):
     print('Validating')
-    global val_itr
-    global val_loss_list
+    # global val_itr
+    val_loss_list = []
 
     # initialize tqdm progress bar
-    prog_bar = tqdm(valid_data_loader, total=len(valid_data_loader))
+    prog_bar = tqdm(val_loader, total=len(val_loader))
 
-    for i, data in enumerate(prog_bar):
+    for i, data in enumerate(val_loader):
         images, targets = data
 
-        images = list(image.to(DEVICE) for image in images)
-        targets = [{k: v.to(DEVICE) for k, v in t.items()} for t in targets]
+        images = list(image.to(device) for image in images)
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
         with torch.no_grad():
             loss_dict = model(images, targets)
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
+
         val_loss_list.append(loss_value)
         val_loss_hist.send(loss_value)
-        val_itr += 1
+        # val_itr += 1
+
         # update the loss value beside the progress bar for each iteration
         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
     return val_loss_list
