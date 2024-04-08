@@ -36,13 +36,8 @@ class Parser:
                             width.append(page['@width'])
                         else:
                             for bbox in page[category]:
-                                coco = [
-                                    bbox['@xmin'],
-                                    bbox['@ymin'],
-                                    bbox['@xmax'] - bbox['@xmin'],  # width
-                                    bbox['@ymax'] - bbox['@ymin']  # height
-                                ]
-                                page_bboxes.append(coco)  # [xmin, ymin, width, height]
+                                # [xmin, ymin, xmax, ymax] is correct format
+                                page_bboxes.append([bbox['@xmin'], bbox['@ymin'], bbox['@xmax'], bbox['@ymax']])
                                 page_labels.append(self.encoded_labels[category])
 
                     labels.append(page_labels)

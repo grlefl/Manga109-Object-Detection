@@ -12,8 +12,8 @@ def train_model(device, model, optimizer, train_loader, train_loss_hist, valid_l
         start = time.time()  # start timer and carry out training and validation
 
         train_loss = train(device, model, optimizer, train_loader, train_loss_hist)
-        val_loss = validate(device, model, valid_loader, val_loss_hist)
-        print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}, validation loss: {val_loss_hist.value:.3f}")
+        val_loss = validate(device, model, valid_loader, valid_loss_hist)
+        print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}, validation loss: {valid_loss_hist.value:.3f}")
 
         end = time.time()
         print(f"Took {((end - start) / 60):.3f} minutes for epoch {epoch}")
