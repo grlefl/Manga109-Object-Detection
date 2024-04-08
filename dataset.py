@@ -1,7 +1,7 @@
 import cv2
-import numpy as np
 import torch
 from torch.utils.data import Dataset
+from torchvision.transforms import functional as F
 
 
 class CustomDataset(Dataset):
@@ -23,11 +23,36 @@ class CustomDataset(Dataset):
 
         if self.transform:
             transformed = self.transform(image=image, bboxes=bboxes, labels=labels)
-            image = transformed['image']    # image transform includes ToTensor
+            image = transformed['image']
             bboxes = transformed['bboxes']
             labels = transformed['labels']
 
-        bboxes = torch.tensor(bboxes, dtype=torch.float32)
-        labels = torch.tensor(labels, dtype=torch.int64)
+        #bboxes = torch.tensor(bboxes, dtype=torch.float32)
+        #labels = torch.tensor(labels, dtype=torch.int64)
 
         return image, bboxes, labels
+
+
+class ToTensor(object):
+    def __init__(self, max_value=10):
+        self.max_value = max_value
+
+    def __call__(self, image, bboxes, labels):
+        # convert image to tensor
+        image_tensor = F.to_tensor(image)
+
+        # pad bounding boxes and labels
+        num_boxes = len(bboxes)
+        pad_size = self.max_value - num_boxes
+        if pad_size > 0:
+            padded_bboxes = bboxes + [[0, 0, 0, 0]] * pad_size
+            padded_labels = labels + [0] * pad_size
+        else:
+            padded_bboxes = bboxes[:self.max_value]
+            padded_labels = labels[:self.max_value]
+
+        # convert padded bounding boxes and labels to tensors
+        bboxes_tensor = torch.tensor(padded_bboxes, dtype=torch.float32)
+        labels_tensor = torch.tensor(padded_labels, dtype=torch.int64)
+
+        return image_tensor, bboxes_tensor, labels_tensor
