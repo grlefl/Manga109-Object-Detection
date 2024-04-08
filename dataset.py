@@ -18,11 +18,11 @@ class CustomDataset(Dataset):
         bboxes = self.img_df.iloc[idx]['bboxes']        # [[box#1], [box#2], [box#3]]
         labels = self.img_df.iloc[idx]['labels']        # [label#1, label#2, label#3]
 
-        image = cv2.imread(img_path)                                        # load the image as numpy array (BGR format)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)   # convert BGR image to RGB format
-        # image = image.astype(np.float32) / 255.                           # normalize image for pixel range [0, 1]
+        image = cv2.imread(img_path)                            # load the image as numpy array (BGR format)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)          # convert BGR image to RGB format
+        image = image.astype(np.float32) / 255.                 # normalize image for pixel range [0, 1]
 
-        bboxes = torch.as_tensor(bboxes, dtype=torch.float32)                        # bounding box to tensor
+        bboxes = torch.as_tensor(bboxes, dtype=torch.float32)                       # bounding box to tensor
         # area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])          # area of the bounding boxes
         # iscrowd = torch.zeros((boxes.shape[0],), dtype=torch.int64)               # no crowd instances
         labels = torch.as_tensor(labels, dtype=torch.int64)                         # labels to tensor
@@ -40,7 +40,7 @@ class CustomDataset(Dataset):
         if self.transform:
             transformed = self.transform(image=image, bboxes=target['bboxes'], labels=labels)
             image = transformed['image']
-            target['bboxes'] = torch.Tensor(transformed['bboxes'])
+            target['bboxes'] = transformed['bboxes']
 
         return image, target
 
