@@ -31,8 +31,8 @@ class CustomDataset(Dataset):
         if self.transform:
             transformed = self.transform(image=image, bboxes=target['boxes'], labels=target['labels'])
             image = transformed['image']
-            target['boxes'] = torch.Tensor(transformed['bboxes'])   # format to tensor
-            target['images'] = torch.Tensor(transformed['labels'])  # format to tensor
+            target['boxes'] = torch.tensor(transformed['bboxes'], dtype=torch.float32)  # format to tensor
+            target['labels'] = torch.tensor(transformed['labels'], dtype=torch.int64)   # format to tensor
 
         return image, target
     
