@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PASCAL-Segmentation.iml" filepath="$PROJECT_DIR$/.idea/PASCAL-Segmentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Manga109-BoundingDetection.iml" filepath="$PROJECT_DIR$/.idea/Manga109-BoundingDetection.iml" />
     </modules>
   </component>
 </project>

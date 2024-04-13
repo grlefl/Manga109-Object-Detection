@@ -37,7 +37,7 @@ def train(device, model, optimizer, train_loader, train_loss_hist):
     # initialize tqdm progress bar
     prog_bar = tqdm(train_loader, total=len(train_loader))
 
-    for i, data in enumerate(train_loader):
+    for i, data in enumerate(prog_bar):
         optimizer.zero_grad()
         images, targets = data
 
@@ -67,7 +67,7 @@ def validate(device, model, valid_loader, val_loss_hist):
     # initialize tqdm progress bar
     prog_bar = tqdm(valid_loader, total=len(valid_loader))
 
-    for i, data in enumerate(valid_loader):
+    for i, data in enumerate(prog_bar):
         images, targets = data
 
         images = list(image.to(device) for image in images)
