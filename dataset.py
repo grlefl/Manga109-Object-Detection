@@ -22,23 +22,14 @@ class CustomDataset(Dataset):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)          # convert BGR image to RGB format
         image = image.astype(np.float32) / 255.                 # normalize image for pixel range [0, 1]
 
-        # boxes = torch.as_tensor(boxes, dtype=torch.float32)                       # bounding box to tensor
-        # # area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])          # area of the bounding boxes
-        # # iscrowd = torch.zeros((boxes.shape[0],), dtype=torch.int64)               # no crowd instances
-        # labels = torch.as_tensor(labels, dtype=torch.int64)                         # labels to tensor
-
         # prepare the final `target` dictionary
         target = {}
         target["boxes"] = boxes
         target["labels"] = labels
-        # target["area"] = area
-        # target["iscrowd"] = iscrowd
-        # image_id = torch.tensor([idx])
-        # target["image_id"] = image_id
 
         # apply the image transforms
         if self.transform:
-            transformed = self.transform(image=image, bboxes=target['boxes'], labels=labels)
+            transformed = self.transform(image=image, bboxes=target['boxes'], labels=target['labels'])
             image = transformed['image']
             target['boxes'] = torch.Tensor(transformed['bboxes'])   # format to tensor
             target['images'] = torch.Tensor(transformed['labels'])  # format to tensor
