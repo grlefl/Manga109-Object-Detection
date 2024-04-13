@@ -5,9 +5,8 @@ from torch.utils.data import Dataset
 
 
 class CustomDataset(Dataset):
-    def __init__(self, img_df, padding=550, transform=None):
+    def __init__(self, img_df, transform=None):
         self.img_df = img_df
-        self.max_value = padding
         self.transform = transform
 
     def __len__(self):
