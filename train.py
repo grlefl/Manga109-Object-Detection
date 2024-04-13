@@ -7,7 +7,7 @@ def train_model(device, model, optimizer, train_loader, train_loss_hist, valid_l
     for epoch in range(num_epochs):
         print(f"\nEPOCH {epoch + 1} of {num_epochs}")
         train_loss_hist.reset()     # reset epoch training history
-        valid_loss_hist.reset()       # reset epoch validation history
+        valid_loss_hist.reset()     # reset epoch validation history
 
         start = time.time()  # start timer and carry out training and validation
 
