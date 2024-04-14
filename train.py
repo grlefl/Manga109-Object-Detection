@@ -13,10 +13,10 @@ def train_model(device, model, optimizer, train_loader, train_loss_hist, valid_l
 
         train_loss = train(device, model, optimizer, train_loader, train_loss_hist)
         val_loss = validate(device, model, valid_loader, valid_loss_hist)
-        print(f"Epoch #{epoch + 1} train loss: {train_loss_hist.value:.3f}, validation loss: {valid_loss_hist.value:.3f}")
 
         end = time.time()
-        print(f"Took {((end - start) / 60):.3f} minutes for epoch {epoch}")
+        print(f"Epoch #{epoch + 1}, Train Loss: {train_loss_hist.value:.3f}, "
+              f"Validation Loss: {valid_loss_hist.value:.3f}, Duration: {((end - start) / 60):.3f} minutes")
 
         # save the best model till now if we have the least loss in the current epoch
         # save_best_model(
@@ -49,7 +49,7 @@ def train(device, model, optimizer, train_loader, train_loss_hist):
         loss_value = losses.item()
 
         train_loss_list.append(loss_value)
-        train_loss_hist.send(loss_value)
+        # train_loss_hist.send(loss_value)
 
         losses.backward()
         optimizer.step()
@@ -62,7 +62,7 @@ def train(device, model, optimizer, train_loader, train_loss_hist):
 # function for running validation iterations
 def validate(device, model, valid_loader, val_loss_hist):
     print('Validating')
-    val_loss_list = []
+    valid_loss_list = []
 
     # initialize tqdm progress bar
     prog_bar = tqdm(valid_loader, total=len(valid_loader))
@@ -78,9 +78,9 @@ def validate(device, model, valid_loader, val_loss_hist):
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
 
-        val_loss_list.append(loss_value)
-        val_loss_hist.send(loss_value)
+        valid_loss_list.append(loss_value)
+        # val_loss_hist.send(loss_value)
 
         # update the loss value beside the progress bar for each iteration
         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
-    return val_loss_list
+    return valid_loss_list
