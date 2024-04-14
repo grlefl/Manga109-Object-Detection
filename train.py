@@ -3,20 +3,36 @@ import torch
 from tqdm import tqdm
 
 
-def train_model(device, model, optimizer, train_loader, train_loss_hist, valid_loader, valid_loss_hist, num_epochs):
+def train_model(device, model, optimizer, train_loader, train_epoch_hist, valid_loader, valid_epoch_hist, num_epochs):
+    patience = 10
+    best_val_loss = float('inf')
+    patience_counter = 0
+
     for epoch in range(num_epochs):
         print(f"\nEPOCH {epoch + 1} of {num_epochs}")
-        train_loss_hist.reset()     # reset epoch training history
-        valid_loss_hist.reset()     # reset epoch validation history
+        train_epoch_hist.reset()     # reset epoch training history
+        valid_epoch_hist.reset()     # reset epoch validation history
 
         start = time.time()  # start timer and carry out training and validation
 
-        train_loss = train(device, model, optimizer, train_loader, train_loss_hist)
-        val_loss = validate(device, model, valid_loader, valid_loss_hist)
+        train_loss = train(device, model, optimizer, train_loader, train_epoch_hist)
+        val_loss = validate(device, model, valid_loader, valid_epoch_hist)
 
         end = time.time()
-        print(f"Epoch #{epoch + 1}, Train Loss: {train_loss_hist.value:.3f}, "
-              f"Validation Loss: {valid_loss_hist.value:.3f}, Duration: {((end - start) / 60):.3f} minutes")
+        print(f"Epoch #{epoch + 1}, Train Loss: {train_epoch_hist.value:.3f}, "
+              f"Validation Loss: {valid_epoch_hist.value:.3f}, Duration: {((end - start) / 60):.3f} minutes")
+
+        # early stopping
+        if valid_epoch_hist.value < best_val_loss:
+            best_val_loss = valid_epoch_hist.value
+            patience_counter = 0
+            # save_best_model(best_val_loss, epoch, model, optimizer)  # save the best model
+        else:
+            patience_counter += 1
+            if patience_counter >= patience:
+                print(f"Validation loss has not improved for {patience} epochs. Early stopping...")
+                break
+
 
         # save the best model till now if we have the least loss in the current epoch
         # save_best_model(
@@ -30,7 +46,7 @@ def train_model(device, model, optimizer, train_loader, train_loss_hist, valid_l
 
 
 # function for running training iterations
-def train(device, model, optimizer, train_loader, train_loss_hist):
+def train(device, model, optimizer, train_loader, train_epoch_hist):
     print('Training')
     train_loss_list = []
 
@@ -49,7 +65,7 @@ def train(device, model, optimizer, train_loader, train_loss_hist):
         loss_value = losses.item()
 
         train_loss_list.append(loss_value)
-        # train_loss_hist.send(loss_value)
+        # train_epoch_hist.send(loss_value)
 
         losses.backward()
         optimizer.step()
