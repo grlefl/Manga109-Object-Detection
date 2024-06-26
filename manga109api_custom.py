@@ -1,6 +1,7 @@
 import manga109api
 
 
+# This class uses the manga109api library to create a large dictionary with all relevant image data.
 class Parser:
     def __init__(self, root_dir):
         """
@@ -11,22 +12,23 @@ class Parser:
 
     def load_all_images(self):
 
-        img_path = []
-        width = []
-        height = []
-        bboxes = []
-        labels = []
-        book_id = []
+        img_path = []   # list of image paths
+        width = []      # list of corresponding image widths
+        height = []     # list of corresponding image heights
+        bboxes = []     # list of corresponding bounding boxes
+        labels = []     # list of corresponding labels
+        book_id = []    # list of corresponding book titles
 
         for book in self.parser.books:
-            book_annotation = self.parser.get_annotation(book=book)
-            page_annotations = book_annotation["page"]
-            for page in page_annotations:
-                if self.validate_annotation(page):
+            book_annotation = self.parser.get_annotation(book=book)     # access book annotations
+            page_annotations = book_annotation["page"]                  # access pages of book
+            for page in page_annotations:                   # access each page annotation
+                if self.validate_annotation(page):          # check to see if page has any bounding boxes
 
-                    page_bboxes = []
-                    page_labels = []
+                    page_bboxes = []    # list of bounding boxes
+                    page_labels = []    # list of corresponding bounding box labels
 
+                    # add all relevant information to respective lists
                     for category in page.keys():
                         if category == '@index':
                             img_path.append(self.parser.img_path(book=book, index=page['@index']))
@@ -36,7 +38,7 @@ class Parser:
                             width.append(page['@width'])
                         else:
                             for bbox in page[category]:
-                                # [xmin, ymin, xmax, ymax] is correct format
+                                # [xmin, ymin, xmax, ymax] pascal_voc format
                                 page_bboxes.append([bbox['@xmin'], bbox['@ymin'], bbox['@xmax'], bbox['@ymax']])
                                 page_labels.append(self.encoded_labels[category])
 
@@ -44,6 +46,7 @@ class Parser:
                     bboxes.append(page_bboxes)
                     book_id.append(book)
 
+        # create final image dictionary
         img_dict = {
             "img_path": img_path,
             "width": width,
@@ -55,13 +58,8 @@ class Parser:
 
         return img_dict
 
+    # Return True if a page annotation contains any of the specified annotation keys.
     def validate_annotation(self, page_annotation):
-        """
-        Check if a page annotation contains any of the specified annotation keys.
-
-        Returns:
-        - bool: True if the page annotation contains any of the specified categories, False otherwise.
-        """
         for category in self.encoded_labels.keys():
             if page_annotation.get(category, []):  # check if the key exists and if its value is not an empty list
                 return True

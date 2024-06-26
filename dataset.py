@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import Dataset
 
 
+# custom dataset to augment images, bounding boxes, and labels from dataframe
 class CustomDataset(Dataset):
     def __init__(self, img_df, transform=None):
         self.img_df = img_df
@@ -17,9 +18,9 @@ class CustomDataset(Dataset):
         bboxes = self.img_df.iloc[idx]['bboxes']  # [[box#1], [box#2], [box#3]]
         labels = self.img_df.iloc[idx]['labels']  # [label#1, label#2, label#3]
 
-        image = cv2.imread(img_path)  # load the image as numpy array (BGR format)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # convert BGR image to RGB format
-        image = image.astype(np.float32) / 255.  # normalize image for pixel range [0, 1]
+        image = cv2.imread(img_path)                            # load the image as numpy array (BGR format)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)          # convert BGR image to RGB format
+        image = image.astype(np.float32) / 255.                 # normalize image for pixel range [0, 1]
 
         target = {'boxes': None, 'labels': None}  # prepare target tensor dictionary
 
