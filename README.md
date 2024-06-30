@@ -1,21 +1,27 @@
 # Project Title
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
-- [Acknowledgments](#acknowledgments)
+- [Project Status](#project-status)
+- [Overview](#overview)
+- [Dataset](#dataset)
+- [Developer Documentation](#developer-documentation)
+- [Results](#results)
+- [Presentation](#presentation)
+- [Next Steps](#next-steps)
 
-## Introduction
+## Project Status 
 A brief description of what your project is about and its purpose.
 
-## Features
+## Overview 
+
+## Dataset (User Documentation?)
+
+## Developer Documentation 
 - List key features or functionalities of your project.
 - Bullet points are usually effective for clarity.
 
-## Installation
-Instructions on how to set up and install your project.
+## Results 
+
+## Presentation (w/ link to slides)
+
+## Next Steps 
