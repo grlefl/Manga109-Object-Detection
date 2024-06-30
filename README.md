@@ -20,7 +20,7 @@ This project achieved minimum viable results. <!-- [Next Steps](#next-steps) are
 
 <!-- ## Results -->
 
-## Presentation (w/ link to slides)
+## Presentation
 [Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
 
 ![image](https://github.com/grlefl/Manga109-BoundingDetection/assets/124198528/8de9b6df-966c-4375-8db2-a888eb48a9da)
