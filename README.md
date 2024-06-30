@@ -1,4 +1,4 @@
-# Project Title
+# Object Detection with the Manga109 Dataset
 
 ## Table of Contents
 - [Project Status](#project-status)
@@ -10,7 +10,7 @@
 - [Next Steps](#next-steps)
 
 ## Project Status 
-A brief description of what your project is about and its purpose.
+This project achieved minimum viable results. [Next Steps](#next-steps) are listed below.
 
 ## Overview 
 
