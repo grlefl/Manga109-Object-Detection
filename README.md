@@ -14,15 +14,20 @@
 This project achieved minimum viable results. [Next Steps](#next-steps) are listed below.
 
 ## Overview 
+This project uses a supervised machine-learning model to detect faces, text, body, and frames in various manga spreads. The model also draws a bounding box for each object that is detected. 
+
+Example
+![image](https://github.com/grlefl/Manga109-ObjectDetection/assets/124198528/5c1abe35-8ced-483d-82e3-c3d4bbf2a5fe)
 
 ## User Documentation 
-(incomplete)
+(needs updating)
 
 ## Dataset 
 
 ## Developer Documentation
 
 ## Results
+(needs updating) See presentation. 
 
 ## Presentation
 - [Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
