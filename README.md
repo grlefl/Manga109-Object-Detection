@@ -18,7 +18,7 @@ This project uses a supervised machine-learning model to detect face, text, body
 
 face = **coral**, text = **teal**, body = **mustard**, frame = **navy**
 ![image](https://github.com/grlefl/Manga109-ObjectDetection/assets/124198528/5c1abe35-8ced-483d-82e3-c3d4bbf2a5fe)
-Manga109 dataset, courtesy of [authors](http://www.manga109.org/en/explore.html)
+Manga109 dataset, courtesy of [authors](http://www.manga109.org/en/explore.html).
 
 ## User Documentation 
 (needs updating)
