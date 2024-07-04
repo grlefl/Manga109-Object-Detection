@@ -20,18 +20,18 @@ Example
 ![image](https://github.com/grlefl/Manga109-ObjectDetection/assets/124198528/5c1abe35-8ced-483d-82e3-c3d4bbf2a5fe)
 
 <div style="display: flex; align-items: center;">
-  <div style="width: 20px; height: 20px; background-color: blue; margin-right: 10px;"></div>
-  <span>Blue</span>
+  <div style="width: 20px; height: 20px; background-color: #1E90FF; margin-right: 10px;"></div>
+  <span>#1E90FF</span>
 </div>
 
 <div style="display: flex; align-items: center;">
-  <div style="width: 20px; height: 20px; background-color: red; margin-right: 10px;"></div>
-  <span>Red</span>
+  <div style="width: 20px; height: 20px; background-color: #FF4500; margin-right: 10px;"></div>
+  <span>#FF4500</span>
 </div>
 
 <div style="display: flex; align-items: center;">
-  <div style="width: 20px; height: 20px; background-color: green; margin-right: 10px;"></div>
-  <span>Green</span>
+  <div style="width: 20px; height: 20px; background-color: #32CD32; margin-right: 10px;"></div>
+  <span>#32CD32</span>
 </div>
 
 ## User Documentation 
