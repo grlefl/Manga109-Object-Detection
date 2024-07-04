@@ -19,6 +19,21 @@ This project uses a supervised machine-learning model to detect faces, text, bod
 Example
 ![image](https://github.com/grlefl/Manga109-ObjectDetection/assets/124198528/5c1abe35-8ced-483d-82e3-c3d4bbf2a5fe)
 
+<div style="display: flex; align-items: center;">
+  <div style="width: 20px; height: 20px; background-color: blue; margin-right: 10px;"></div>
+  <span>Blue</span>
+</div>
+
+<div style="display: flex; align-items: center;">
+  <div style="width: 20px; height: 20px; background-color: red; margin-right: 10px;"></div>
+  <span>Red</span>
+</div>
+
+<div style="display: flex; align-items: center;">
+  <div style="width: 20px; height: 20px; background-color: green; margin-right: 10px;"></div>
+  <span>Green</span>
+</div>
+
 ## User Documentation 
 (needs updating)
 
