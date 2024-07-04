@@ -25,7 +25,7 @@ This project achieved minimum viable results. [Next Steps](#next-steps) are list
 ## Results
 
 ## Presentation
-[Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
+- [Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
 
 ![image](https://github.com/grlefl/Manga109-BoundingDetection/assets/124198528/8de9b6df-966c-4375-8db2-a888eb48a9da)
 ![image](https://github.com/grlefl/Manga109-BoundingDetection/assets/124198528/8a8306ff-885d-425e-af0c-ead28bf41b29)
