@@ -3,22 +3,26 @@
 ## Table of Contents
 - [Project Status](#project-status)
 - [Overview](#overview)
+- [User Documentation](#user-documentation)
 - [Dataset](#dataset)
-<!-- - [Developer Documentation](#developer-documentation)-->
-<!-- - [Results](#results) -->
+- [Developer Documentation](#developer-documentation)
+- [Results](#results) 
 - [Presentation](#presentation)
-<!-- - [Next Steps](#next-steps) -->
+- [Next Steps](#next-steps) 
 
 ## Project Status 
-This project achieved minimum viable results. <!-- [Next Steps](#next-steps) are listed below. -->
+This project achieved minimum viable results. [Next Steps](#next-steps) are listed below.
 
 ## Overview 
 
+## User Documentation 
+(incomplete)
+
 ## Dataset 
 
-<!-- ## Developer Documentation -->
+## Developer Documentation
 
-<!-- ## Results -->
+## Results
 
 ## Presentation
 [Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
