@@ -29,9 +29,10 @@ The [Manga109](http://www.manga109.org/en/) dataset was used for this project. I
 To download images/annotations of Manga109, please visit [here](http://www.manga109.org/en/download.html) and send an application via the form. After that, you will receive the password for downloading images (109 titles of manga as jpeg files) and annotations (bounding box coordinates of face, body, frame, and speech balloon with texts, in the form of XML).
 
 ## Developer Documentation
+-- TO BE COMPLETED -- 
 
 ## Results
-(needs updating) See presentation. 
+(needs updating) See [Presentation](#presentation). 
 
 ## Presentation
 - [Youtube Video](https://www.youtube.com/watch?v=z3r78tbahO4)
@@ -46,3 +47,4 @@ To download images/annotations of Manga109, please visit [here](http://www.manga
 ![image](https://github.com/grlefl/Manga109-BoundingDetection/assets/124198528/f13a2b7f-ba23-4097-b4e7-6152f562a677)
 
 ## Next Steps 
+-- TO BE COMPLETED -- 
