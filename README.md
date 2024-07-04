@@ -18,11 +18,15 @@ This project uses a supervised machine-learning model to detect face, text, body
 
 face = **coral**, text = **teal**, body = **mustard**, frame = **navy**
 ![image](https://github.com/grlefl/Manga109-ObjectDetection/assets/124198528/5c1abe35-8ced-483d-82e3-c3d4bbf2a5fe)
+Manga109 dataset, courtesy of [authors]
 
 ## User Documentation 
 (needs updating)
 
 ## Dataset 
+The [Manga109](http://www.manga109.org/en/) dataset was used for this project. It is the largest dataset for manga (Japanese comic) images, that is made publicly available for academic research purposes with proper copyright notation.
+
+To download images/annotations of Manga109, please visit [here](http://www.manga109.org/en/download.html) and send an application via the form. After that, you will receive the password for downloading images (109 titles of manga as jpeg files) and annotations (bounding box coordinates of face, body, frame, and speech balloon with texts, in the form of XML).
 
 ## Developer Documentation
 
