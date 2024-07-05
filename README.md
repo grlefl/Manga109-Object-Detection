@@ -3,10 +3,10 @@
 ## Table of Contents
 - [Project Status](#project-status)
 - [Overview](#overview)
-- [User Documentation](#user-documentation)
+- [User Documentation](#user-documentation) (needs updating)
 - [Dataset](#dataset)
 - [Developer Documentation](#developer-documentation)
-- [Results](#results) 
+- [Results](#results) (needs updating)
 - [Presentation](#presentation)
 - [Next Steps](#next-steps) 
 
@@ -29,7 +29,12 @@ The [Manga109](http://www.manga109.org/en/) dataset was used for this project. I
 To download images/annotations of Manga109, please visit [here](http://www.manga109.org/en/download.html) and send an application via the form. After that, you will receive the password for downloading images (109 titles of manga as jpeg files) and annotations (bounding box coordinates of face, body, frame, and speech balloon with texts, in the form of XML).
 
 ## Developer Documentation
--- TO BE COMPLETED -- 
+- `main.ipynb`
+- `manga109api_custom.py`
+- `dataset.py`
+- `train.py`
+- `visualize_data.py`
+- `utils.py`
 
 ## Results
 (needs updating) See [Presentation](#presentation). 
