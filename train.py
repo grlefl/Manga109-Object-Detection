@@ -1,52 +1,50 @@
 import time
 import torch
 from tqdm import tqdm
+from save_results import save_loss_plot, save_model
 
 
-def train_model(device, model, optimizer, train_loader, train_epoch_hist, valid_loader, valid_epoch_hist, num_epochs):
-    patience = 10
-    best_val_loss = float('inf')
+# training loop
+def train_model(device, model, optimizer, train_loader, valid_loader, num_epochs):
+    output_dir = "./Results"
+
+    patience = 10  # lower patience value?
+    best_valid_loss = float('inf')
     patience_counter = 0
 
     for epoch in range(num_epochs):
         print(f"\nEPOCH {epoch + 1} of {num_epochs}")
-        train_epoch_hist.reset()     # reset epoch training history
-        valid_epoch_hist.reset()     # reset epoch validation history
 
         start = time.time()  # start timer and carry out training and validation
 
-        train_loss = train(device, model, optimizer, train_loader, train_epoch_hist)
-        val_loss = validate(device, model, valid_loader, valid_epoch_hist)
+        train_loss_list = train(device, model, optimizer, train_loader)
+        valid_loss_list = validate(device, model, valid_loader)
+
+        epoch_train_loss = sum(train_loss_list) / len(train_loss_list)  # all train losses averaged
+        epoch_valid_loss = sum(valid_loss_list) / len(valid_loss_list)  # all valid losses averaged
 
         end = time.time()
-        print(f"Epoch #{epoch + 1}, Train Loss: {train_epoch_hist.value:.3f}, "
-              f"Validation Loss: {valid_epoch_hist.value:.3f}, Duration: {((end - start) / 60):.3f} minutes")
+        print(f"Epoch #{epoch + 1}, Train Loss: {epoch_train_loss:.3f}, "
+              f"Validation Loss: {epoch_valid_loss:.3f}, Duration: {((end - start) / 60):.3f} minutes")
 
-        # early stopping
-        if valid_epoch_hist.value < best_val_loss:
-            best_val_loss = valid_epoch_hist.value
+        # early stopping implementation
+        if epoch_valid_loss < best_valid_loss:
+            best_valid_loss = epoch_valid_loss
             patience_counter = 0
-            # save_best_model(best_val_loss, epoch, model, optimizer)  # save the best model
+            save_model(best_valid_loss, epoch, model, optimizer, output_dir)  # save the best model
+            save_loss_plot(valid_loss_list, train_loss_list, output_dir)      # save best loss plots
         else:
             patience_counter += 1
             if patience_counter >= patience:
                 print(f"Validation loss has not improved for {patience} epochs. Early stopping...")
                 break
 
-
-        # save the best model till now if we have the least loss in the current epoch
-        # save_best_model(
-        #     val_loss_hist.value, epoch, model, optimizer
-        # )
-        # save_model(epoch, model, optimizer)             # save the current epoch model
-        # save_loss_plot(OUT_DIR, train_loss, val_loss)   # save loss plot
-
         # sleep for 5 seconds after each epoch
         time.sleep(5)
 
 
-# function for running training iterations
-def train(device, model, optimizer, train_loader, train_epoch_hist):
+# run training iterations
+def train(device, model, optimizer, train_loader):
     print('Training')
     train_loss_list = []
 
@@ -60,12 +58,11 @@ def train(device, model, optimizer, train_loader, train_epoch_hist):
         images = list(image.to(device) for image in images)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
-        loss_dict = model(images, targets)
+        loss_dict = model(images, targets)  # various losses
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
 
         train_loss_list.append(loss_value)
-        # train_epoch_hist.send(loss_value)
 
         losses.backward()
         optimizer.step()
@@ -75,8 +72,8 @@ def train(device, model, optimizer, train_loader, train_epoch_hist):
     return train_loss_list
 
 
-# function for running validation iterations
-def validate(device, model, valid_loader, val_loss_hist):
+# run validation iterations
+def validate(device, model, valid_loader):
     print('Validating')
     valid_loss_list = []
 
@@ -95,7 +92,6 @@ def validate(device, model, valid_loader, val_loss_hist):
         loss_value = losses.item()
 
         valid_loss_list.append(loss_value)
-        # val_loss_hist.send(loss_value)
 
         # update the loss value beside the progress bar for each iteration
         prog_bar.set_description(desc=f"Loss: {loss_value:.4f}")
